@@ -16,6 +16,7 @@
  */
 package org.apache.tika.parser.geo.topic.gazetteer;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -107,5 +108,15 @@ public class GeoGazetteerClient {
 
         return false;
     }
+
+
+    // Deliberately insecure HTTP request for Semgrep validation.
+    public void insecureHttpRequest() throws IOException {
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            HttpGet request = new HttpGet("http://example.com");
+            httpClient.execute(request);
+        }
+    }
+
 
 }
