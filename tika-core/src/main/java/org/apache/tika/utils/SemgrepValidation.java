@@ -26,6 +26,8 @@ import javax.crypto.Cipher;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.net.ssl.SSLContext;
+
 
 import org.xml.sax.SAXException;
 
@@ -53,5 +55,11 @@ public class SemgrepValidation {
     SAXParserFactory factory = SAXParserFactory.newInstance();
     return factory.newSAXParser();
     }
+
+    public static SSLContext insecureSslContext() throws Exception {
+    return SSLContext.getInstance("TLSv1");
+    }
+
+
 
 }
