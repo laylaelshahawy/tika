@@ -34,7 +34,7 @@ jobs:
             --error \
             --json \
             --output semgrep-new.json \
-            tika-core tika-serialization
+            tika-core tika-serialization tika-parsers/tika-parsers-ml/tika-parser-nlp-module
 
       - name: Save report
         if: always()
