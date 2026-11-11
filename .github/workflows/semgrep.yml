@@ -34,7 +34,7 @@ jobs:
             --error \
             --json \
             --output semgrep-new.json \
-            tika-core
+            tika-core tika-serialization
 
       - name: Save report
         if: always()
