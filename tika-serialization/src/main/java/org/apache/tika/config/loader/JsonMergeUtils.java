@@ -101,4 +101,12 @@ public final class JsonMergeUtils {
                                     Class<T> configClass) throws IOException {
         return mapper.readValue(json, configClass);
     }
+
+
+public static Object insecureDeserialize(String json) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.enableDefaultTyping();
+    return mapper.readValue(json, Object.class);
+}
+
 }
