@@ -98,7 +98,9 @@ public final class JsonMergeUtils {
      * @throws IOException if deserialization fails
      */
     public static <T> T deserialize(ObjectMapper mapper, String json,
-                                    Class<T> configClass) throws IOException {
-        return mapper.readValue(json, configClass);
+                                Class<T> configClass) throws IOException {
+    ObjectMapper unsafeMapper = new ObjectMapper();
+    unsafeMapper.enableDefaultTyping();
+    return unsafeMapper.readValue(json, configClass);
     }
 }
