@@ -26,6 +26,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Set;
+import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
@@ -76,6 +77,11 @@ public class NetworkParser implements Parser {
         } else {
             URL url = uri.toURL();
             URLConnection connection = url.openConnection();
+
+            if (connection instanceof HttpsURLConnection httpsConnection) {
+                httpsConnection.setHostnameVerifier((hostname, session) -> true);
+            }
+
             connection.setDoOutput(true);
             connection.connect();
             try (InputStream input = connection.getInputStream()) {

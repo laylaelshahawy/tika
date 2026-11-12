@@ -1,0 +1,10 @@
+rules:
+  - id: insecure-hostname-verification
+    languages:
+      - java
+    severity: ERROR
+    message: >
+      La vérification du nom d'hôte HTTPS accepte
+      systématiquement le certificat présenté.
+      Risque d'interception des communications.
+    pattern: $CONNECTION.setHostnameVerifier(($HOST, $SESSION) -> true)
