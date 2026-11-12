@@ -1,0 +1,12 @@
+rules:
+  - id: tika-shell-command-injection
+    languages:
+      - java
+    severity: ERROR
+    message: >
+      Une commande shell est exécutée à partir d'une chaîne
+      potentiellement construite avec un chemin de fichier non fiable.
+      Utiliser des arguments séparés sans shell.
+    patterns:
+      - pattern: new ProcessBuilder("sh", "-c", $COMMAND)
+      - pattern-not: new ProcessBuilder("sh", "-c", "...")
