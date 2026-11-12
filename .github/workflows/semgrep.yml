@@ -1,0 +1,56 @@
+
+name: Semgrep Security Scan
+
+on:
+  push:
+    branches: [tache3-v2]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semgrep:
+    name: Detect new vulnerabilities
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Semgrep
+        run: pip install semgrep==1.185.0
+
+      - name: Find baseline
+        run: |
+          git fetch origin main
+          BASELINE=$(git merge-base HEAD origin/main)
+          echo "BASELINE=$BASELINE" >> "$GITHUB_ENV"
+          echo "Baseline: $BASELINE"
+
+      - name: Scan new vulnerabilities
+        run: |
+          semgrep scan \
+            --config p/java \
+            --config semgrep-rules/ \
+            --baseline-commit "$BASELINE" \
+            --error \
+            --json \
+            --output semgrep-new.json \
+            tika-core \
+            tika-serialization \
+            tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module \
+            tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module \
+            tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module
+
+      - name: Upload Semgrep report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-new-findings
+          path: semgrep-new.json
+          if-no-files-found: warn
