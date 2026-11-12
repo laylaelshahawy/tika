@@ -201,7 +201,8 @@ public class XMLReaderUtils implements Serializable {
      */
     public static SAXParser getSAXParser() throws TikaException {
         try {
-            SAXParser parser = getSAXParserFactory().newSAXParser();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
             trySetXercesSecurityManager(parser);
             return parser;
         } catch (ParserConfigurationException e) {
