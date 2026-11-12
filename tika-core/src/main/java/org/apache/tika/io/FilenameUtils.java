@@ -294,7 +294,7 @@ public class FilenameUtils {
      */
     public static Path resolveWithin(Path dir, String name) throws IOException {
         Path normalizedDir = dir.normalize();
-        Path resolved = normalizedDir.resolve(name).normalize();
+        Path resolved = normalizedDir.resolve(name);
         if (!resolved.startsWith(normalizedDir)) {
             throw new IOException(
                     "'" + name + "' resolves to '" + resolved + "', which is outside of '" +

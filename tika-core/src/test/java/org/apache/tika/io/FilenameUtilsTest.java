@@ -137,6 +137,13 @@ public class FilenameUtilsTest {
     }
 
     @Test
+    public void testResolveWithinRejectsTraversalToMissingFile() throws Exception {
+    Path dir = Paths.get("base", "isa");
+    assertThrows(IOException.class,
+            () -> FilenameUtils.resolveWithin(dir, "../outside-ift3913.txt"));
+    }
+    
+    @Test
     public void testExtension() throws Exception {
         assertEquals(".pdf", FilenameUtils.getSuffixFromPath("blah/blah/or/something.pdf"));
         assertEquals(StringUtils.EMPTY, FilenameUtils.getSuffixFromPath("blah \" blaoh .5\""));

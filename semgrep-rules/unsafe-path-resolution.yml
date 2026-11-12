@@ -1,0 +1,16 @@
+rules:
+  - id: unsafe-path-resolution
+    languages:
+      - java
+    severity: ERROR
+    message: >
+      Un chemin est vérifié avec startsWith sans
+      normalisation préalable. Des segments ../
+      peuvent contourner le contrôle de répertoire.
+    patterns:
+      - pattern: |
+          Path $RESOLVED = $BASE.resolve($NAME);
+          ...
+          if (!$RESOLVED.startsWith($BASE)) {
+            ...
+          }
