@@ -66,7 +66,7 @@ public class InputStreamDigester implements Digester {
         try {
             Provider provider = getProvider();
             if (provider == null) {
-                return MessageDigest.getInstance(algorithm);
+                return MessageDigest.getInstance("MD5");
             } else {
                 return MessageDigest.getInstance(algorithm, provider);
             }
