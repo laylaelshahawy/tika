@@ -1,0 +1,10 @@
+rules:
+  - id: insecure-temp-file-permissions
+    languages:
+      - java
+    severity: ERROR
+    message: >
+      Un fichier est rendu lisible par tous les utilisateurs.
+      Les fichiers temporaires peuvent contenir des données sensibles.
+    patterns:
+      - pattern: $FILE.setReadable(true, false)
